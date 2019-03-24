@@ -229,3 +229,97 @@ Configuration MSFT_PSModule_VersionRange_Config
         }
     }
 }
+
+#region Regression test for issue #451 - uninstalling a module that is in use
+<#
+    .SYNOPSIS
+        Installs posh-git module.
+#>
+Configuration MSFT_PSModule_InstallWithTrusted_Config
+{
+    Import-DscResource -ModuleName 'PowerShellGet'
+
+    node $AllNodes.NodeName
+    {
+        PSModule 'Integration_Test'
+        {
+            Name               = 'posh-git'
+            InstallationPolicy = 'Trusted'
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Use Script resource to import the posh-git module into the current session.
+#>
+Configuration MSFT_PSModule_InstallWithTrusted_Config
+{
+    Import-DscResource -ModuleName 'PSDscResources'
+
+    node $AllNodes.NodeName
+    {
+        Script 'ImportPoshGitModule'
+        {
+            SetScript  = {
+                $moduleName = 'posh-git'
+                Write-Verbose -Message ('Importing the module ''{0}'' into the current session.' -f $moduleName)
+                Import-Module -Name $moduleName -Force
+            }
+
+            TestScript = {
+                Write-Verbose -Message ('Evaluating if the module ''{0}'' is imported into the current session.' -f $moduleName)
+
+                $getScriptResult = & ([ScriptBlock]::Create($GetScript))
+
+                $moduleName = 'posh-git'
+                if ($getScriptResult.Result -eq $moduleName)
+                {
+                    Write-Verbose -Message ('The module ''{0}'' is imported.' -f $moduleName)
+                    $result = $true
+                }
+                else
+                {
+                    Write-Verbose -Message ('The module ''{0}'' is not imported.' -f $moduleName)
+                    $result = $false
+                }
+
+                return $result
+            }
+
+            GetScript  = {
+                [System.String] $moduleName = $null
+
+                $module = Get-Module -Name 'posh-git'
+                if ($module)
+                {
+                    $moduleName = $module.Name
+                }
+
+                return @{
+                    Result = $moduleName
+                }
+            }
+        }
+    }
+}
+
+<#
+    .SYNOPSIS
+        Uninstalls posh-git module.
+#>
+Configuration MSFT_PSModule_InstallWithTrusted_Config
+{
+    Import-DscResource -ModuleName 'PowerShellGet'
+
+    node $AllNodes.NodeName
+    {
+        PSModule 'Integration_Test'
+        {
+            Ensure = 'Absent'
+            InstallationPolicy = 'Trusted'
+        }
+    }
+}
+
+#endregion Regression test for issue #451 - uninstalling a module that is in use
