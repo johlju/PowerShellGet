@@ -495,5 +495,104 @@ Describe "$($script:dcsResourceName)_Integration" {
             Test-DscConfiguration -Verbose | Should -Be $true
         }
     }
+
+    <#
+        This should install a module that so be in use when it gets uninstalled.
+    #>
+    $configurationName = "$($script:dcsResourceName)_InstallModuleThatShouldBeInUse_Config"
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        It 'Should compile and apply the MOF without throwing' {
+            {
+                $configurationParameters = @{
+                    OutputPath        = $TestDrive
+                    ConfigurationData = $ConfigurationData
+                }
+
+                & $configurationName @configurationParameters
+
+                $startDscConfigurationParameters = @{
+                    Path         = $TestDrive
+                    ComputerName = 'localhost'
+                    Wait         = $true
+                    Verbose      = $true
+                    Force        = $true
+                    ErrorAction  = 'Stop'
+                }
+
+                Start-DscConfiguration @startDscConfigurationParameters
+            } | Should -Not -Throw
+        }
+
+        It 'Should return $true when Test-DscConfiguration is run' {
+            Test-DscConfiguration -Verbose | Should -Be $true
+        }
+    }
+
+    <#
+        This make sure the previous installed module is in use in the current session.
+    #>
+    $configurationName = "$($script:dcsResourceName)_ImportModuleSoItIsInUse_Config"
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        It 'Should compile and apply the MOF without throwing' {
+            {
+                $configurationParameters = @{
+                    OutputPath        = $TestDrive
+                    ConfigurationData = $ConfigurationData
+                }
+
+                & $configurationName @configurationParameters
+
+                $startDscConfigurationParameters = @{
+                    Path         = $TestDrive
+                    ComputerName = 'localhost'
+                    Wait         = $true
+                    Verbose      = $true
+                    Force        = $true
+                    ErrorAction  = 'Stop'
+                }
+
+                Start-DscConfiguration @startDscConfigurationParameters
+            } | Should -Not -Throw
+        }
+
+        It 'Should return $true when Test-DscConfiguration is run' {
+            Test-DscConfiguration -Verbose | Should -Be $true
+        }
+    }
+
+    <#
+        This should uninstall a module that is in use in the current session.
+    #>
+    $configurationName = "$($script:dcsResourceName)_UninstallModuleThatIsInUse_Config"
+
+    Context ('When using configuration {0}' -f $configurationName) {
+        It 'Should compile and apply the MOF without throwing' {
+            {
+                $configurationParameters = @{
+                    OutputPath        = $TestDrive
+                    ConfigurationData = $ConfigurationData
+                }
+
+                & $configurationName @configurationParameters
+
+                $startDscConfigurationParameters = @{
+                    Path         = $TestDrive
+                    ComputerName = 'localhost'
+                    Wait         = $true
+                    Verbose      = $true
+                    Force        = $true
+                    ErrorAction  = 'Stop'
+                }
+
+                Start-DscConfiguration @startDscConfigurationParameters
+            } | Should -Not -Throw
+        }
+
+        It 'Should return $true when Test-DscConfiguration is run' {
+            Test-DscConfiguration -Verbose | Should -Be $true
+        }
+    }
 }
 #endregion

@@ -235,7 +235,7 @@ Configuration MSFT_PSModule_VersionRange_Config
     .SYNOPSIS
         Installs posh-git module.
 #>
-Configuration MSFT_PSModule_InstallWithTrusted_Config
+Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
 {
     Import-DscResource -ModuleName 'PowerShellGet'
 
@@ -253,7 +253,7 @@ Configuration MSFT_PSModule_InstallWithTrusted_Config
     .SYNOPSIS
         Use Script resource to import the posh-git module into the current session.
 #>
-Configuration MSFT_PSModule_InstallWithTrusted_Config
+Configuration MSFT_PSModule_ImportModuleSoItIsInUse_Config
 {
     Import-DscResource -ModuleName 'PSDscResources'
 
@@ -308,7 +308,7 @@ Configuration MSFT_PSModule_InstallWithTrusted_Config
     .SYNOPSIS
         Uninstalls posh-git module.
 #>
-Configuration MSFT_PSModule_InstallWithTrusted_Config
+Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
 {
     Import-DscResource -ModuleName 'PowerShellGet'
 
@@ -317,7 +317,7 @@ Configuration MSFT_PSModule_InstallWithTrusted_Config
         PSModule 'Integration_Test'
         {
             Ensure = 'Absent'
-            InstallationPolicy = 'Trusted'
+            Name   = 'posh-git'
         }
     }
 }
