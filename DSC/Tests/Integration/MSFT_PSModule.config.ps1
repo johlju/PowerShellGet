@@ -243,7 +243,7 @@ Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
     {
         PSModule 'Integration_Test'
         {
-            Name               = 'posh-git'
+            Name               = $Node.Module2_Name
             InstallationPolicy = 'Trusted'
         }
     }
@@ -253,7 +253,7 @@ Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
     .SYNOPSIS
         Use Script resource to import the posh-git module into the current session.
 #>
-Configuration MSFT_PSModule_ImportModuleSoItIsInUse_Config
+Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
 {
     Import-DscResource -ModuleName 'PSDscResources'
 
@@ -262,13 +262,16 @@ Configuration MSFT_PSModule_ImportModuleSoItIsInUse_Config
         Script 'ImportPoshGitModule'
         {
             SetScript  = {
-                $moduleName = 'posh-git'
+                $moduleName = $Using:Node.Module2_Name
                 Write-Verbose -Message ('Importing the module ''{0}'' into the current session.' -f $moduleName)
                 Import-Module -Name $moduleName -Force
+
+                # Use a assembly from the imported module.
+                $sql = New-Object -TypeName 'Microsoft.SqlServer.Management.Smo.Server'
             }
 
             TestScript = {
-                $moduleName = 'posh-git'
+                $moduleName = $Using:Node.Module2_Name
 
                 Write-Verbose -Message ('Evaluating if the module ''{0}'' is imported into the current session.' -f $moduleName)
 
@@ -291,7 +294,7 @@ Configuration MSFT_PSModule_ImportModuleSoItIsInUse_Config
             GetScript  = {
                 [System.String] $moduleName = $null
 
-                $module = Get-Module -Name 'posh-git'
+                $module = Get-Module -Name $Using:Node.Module2_Name
                 if ($module)
                 {
                     $moduleName = $module.Name

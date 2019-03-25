@@ -532,7 +532,7 @@ Describe "$($script:dcsResourceName)_Integration" {
     <#
         This make sure the previous installed module is in use in the current session.
     #>
-    $configurationName = "$($script:dcsResourceName)_ImportModuleSoItIsInUse_Config"
+    $configurationName = "$($script:dcsResourceName)_ImportModuleToBeInUse_Config"
 
     Context ('When using configuration {0}' -f $configurationName) {
         It 'Should compile and apply the MOF without throwing' {
