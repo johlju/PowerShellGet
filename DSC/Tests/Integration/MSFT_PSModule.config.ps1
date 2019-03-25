@@ -268,11 +268,12 @@ Configuration MSFT_PSModule_ImportModuleSoItIsInUse_Config
             }
 
             TestScript = {
+                $moduleName = 'posh-git'
+
                 Write-Verbose -Message ('Evaluating if the module ''{0}'' is imported into the current session.' -f $moduleName)
 
                 $getScriptResult = & ([ScriptBlock]::Create($GetScript))
 
-                $moduleName = 'posh-git'
                 if ($getScriptResult.Result -eq $moduleName)
                 {
                     Write-Verbose -Message ('The module ''{0}'' is imported.' -f $moduleName)
