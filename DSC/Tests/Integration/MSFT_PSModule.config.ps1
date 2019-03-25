@@ -310,7 +310,7 @@ Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
 
 <#
     .SYNOPSIS
-        Uninstalls posh-git module.
+        Uninstalls the module that is in use.
 #>
 Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
 {
@@ -321,7 +321,7 @@ Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
         PSModule 'Integration_Test'
         {
             Ensure = 'Absent'
-            Name   = 'posh-git'
+            Name   = $Using:Node.Module2_Name
         }
     }
 }
