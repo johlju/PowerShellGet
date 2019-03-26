@@ -264,10 +264,11 @@ Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
             SetScript  = {
                 $moduleName = $Using:Node.Module2_Name
                 Write-Verbose -Message ('Importing the module ''{0}'' into the current session.' -f $moduleName)
-                Import-Module -Name $moduleName -Force
+                Import-Module -Name $moduleName -Force -Verbose:$false
 
                 # Use a assembly from the imported module.
-                $sql = New-Object -TypeName 'Microsoft.SqlServer.Management.Smo.Server'
+                #$sql = New-Object -TypeName 'Microsoft.SqlServer.Management.Smo.Server'
+                $sql = New-Object -TypeName 'Microsoft.AnalysisServices.Server'
             }
 
             TestScript = {
