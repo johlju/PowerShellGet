@@ -321,7 +321,7 @@ Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
         PSModule 'Integration_Test'
         {
             Ensure = 'Absent'
-            Name   = $Using:Node.Module2_Name
+            Name   = $Node.Module2_Name
         }
     }
 }
