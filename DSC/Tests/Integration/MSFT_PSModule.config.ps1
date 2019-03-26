@@ -271,7 +271,6 @@ Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
                 Import-Module -Name $moduleName -Force -Verbose:$false
 
                 # Use a assembly from the imported module.
-                #$sql = New-Object -TypeName 'Microsoft.SqlServer.Management.Smo.Server'
                 $sql = New-Object -TypeName 'Microsoft.AnalysisServices.Server'
             }
 
