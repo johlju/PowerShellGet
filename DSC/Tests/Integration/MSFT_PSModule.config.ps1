@@ -233,7 +233,7 @@ Configuration MSFT_PSModule_VersionRange_Config
 #region Regression test for issue #451 - uninstalling a module that is in use
 <#
     .SYNOPSIS
-        Installs posh-git module.
+        Installs SqlServer module that should be made in use.
 #>
 Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
 {
@@ -251,7 +251,11 @@ Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
 
 <#
     .SYNOPSIS
-        Use Script resource to import the posh-git module into the current session.
+        Use Script resource to import the SqlServer module
+        into the current session, and creates an object of
+        the Microsoft.AnalysisServices.Server class which
+        loads the assembly into the session which prevents
+        the folder from being deleted.
 #>
 Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
 {
@@ -326,5 +330,4 @@ Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
         }
     }
 }
-
 #endregion Regression test for issue #451 - uninstalling a module that is in use
