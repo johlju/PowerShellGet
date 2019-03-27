@@ -136,7 +136,6 @@ function Get-TargetResource {
         $latestModule = $modules[0]
 
         foreach ($module in $modules) {
-            Write-Verbose -Message ($localizedData.ModuleFound -f $module.Name, $module.Version)
             if ($module.Version -gt $latestModule.Version) {
                 $latestModule = $module
             }
