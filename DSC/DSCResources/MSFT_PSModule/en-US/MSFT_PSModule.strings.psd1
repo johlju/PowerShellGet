@@ -24,7 +24,7 @@ ConvertFrom-StringData -StringData @'
     StartInstallModule              = Begin invoking Install-Module '{0}' version '{1}' from '{2}' repository.
     StartUnInstallModule            = Begin invoking Remove-Item to remove the module '{0}' from the file system.
     InstalledSuccess                = Successfully installed the module '{0}'
-    UnInstalledSuccess              = Successfully uninstalled the module '{0}'
+    UninstalledSuccess              = Successfully uninstalled the module '{0}'
     VersionMismatch                 = The installed Module '{0}' has the version: '{1}'
     RepositoryMismatch              = The installed Module '{0}' is from '{1}' repository.
     FoundModulePath                 = Found the module path: '{0}'.
@@ -33,4 +33,5 @@ ConvertFrom-StringData -StringData @'
     InstallationPolicyFailed        = Failed in the installation policy. Your current InstallationPolicy is '{0}' and the repository is '{1}'. If you trust the repository, set the policy to "Trusted".
     GetTargetResourceMessage        = Getting the current state of the module '{0}'.
     TestTargetResourceMessage       = Determining if the module '{0}' is in the desired state.
+    ModuleInUse                     = Unable to remove the module '{0}' because it is currently in use. A restart is required to remove the module. Error: {1}
 '@

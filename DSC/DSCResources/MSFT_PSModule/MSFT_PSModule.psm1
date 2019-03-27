@@ -476,11 +476,16 @@ function Set-TargetResource {
                 #>
                 Microsoft.PowerShell.Management\Remove-Item -Path $path -Force -Recurse -ErrorAction 'Stop'
 
-                Write-Verbose -Message ($localizedData.UnInstalledSuccess -f $module.Name)
+                Write-Verbose -Message ($localizedData.UninstalledSuccess -f $module.Name)
+            }
+            catch [System.UnauthorizedAccessException] {
+                # TODO: Add logic to remove the file during boot.
+
+                if (-not $AllowRestart) {
+                    Write-Warning -Message $script:localizedData.ModuleInUse -f $module.Name, $_.Exception.Message
+                }
             }
             catch {
-                Write-Verbose -Message ('FullyQualifiedErrorId: {0}' -f $_.FullyQualifiedErrorId)
-                Write-Verbose -Message ('Exception: {0}' -f $_.Exception.GetType().Name)
                 $errorMessage = $script:localizedData.FailToUninstall -f $module.Name
                 New-InvalidOperationException -Message $errorMessage -ErrorRecord $_
             }
