@@ -479,6 +479,8 @@ function Set-TargetResource {
                 Write-Verbose -Message ($localizedData.UnInstalledSuccess -f $module.Name)
             }
             catch {
+                Write-Verbose -Message ('FullyQualifiedErrorId: {0}' -f $_.FullyQualifiedErrorId)
+                Write-Verbose -Message ('Error Id: {0}' -f $_.FullyQualifiedErrorId)
                 $errorMessage = $script:localizedData.FailToUninstall -f $module.Name
                 New-InvalidOperationException -Message $errorMessage -ErrorRecord $_
             }
