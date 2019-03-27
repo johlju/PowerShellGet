@@ -15,7 +15,7 @@ ConvertFrom-StringData -StringData @'
     FailToInstall                   = Failed to install the module '{0}'.
     InDesiredState                  = Resource '{0}' is in the desired state.
     NotInDesiredState               = Resource '{0}' is not in the desired state.
-    ModuleFound                     = Module '{0}' is found on the node.
+    ModuleFound                     = Module '{0}' (v{1}) is found on the node.
     ModuleNotFound                  = Module '{0}' is not found on the node.
     ModuleWithRightPropertyNotFound = Module '{0}' with the right version or other properties not found in the node.
     ModuleNotFoundInRepository      = Module '{0}' with the right version or other properties not found in the repository.

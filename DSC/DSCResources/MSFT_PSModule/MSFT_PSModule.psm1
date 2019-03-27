@@ -132,12 +132,11 @@ function Get-TargetResource {
 
     # If the module is found, the count > 0
     if ($modules.Count -gt 0) {
-        Write-Verbose -Message ($localizedData.ModuleFound -f $Name)
-
         # Find a module with the latest version and return its properties.
         $latestModule = $modules[0]
 
         foreach ($module in $modules) {
+            Write-Verbose -Message ($localizedData.ModuleFound -f $module.Name, $module.Version)
             if ($module.Version -gt $latestModule.Version) {
                 $latestModule = $module
             }
@@ -604,7 +603,7 @@ function Get-RightModule {
         if ($versionMatch) {
             # A user does not provide Repository, we are good
             if (-not $PSBoundParameters.ContainsKey('Repository')) {
-                Write-Verbose -Message ($localizedData.ModuleFound -f "$Name $installedVersion")
+                Write-Verbose -Message ($localizedData.ModuleFound -f $Name, $installedVersion)
                 $returnVal += $m
             }
             else {
@@ -612,11 +611,11 @@ function Get-RightModule {
                 $sourceName = Get-ModuleRepositoryName -Module $m
 
                 if ($Repository -ieq $sourceName) {
-                    Write-Verbose -Message ($localizedData.ModuleFound -f "$Name $installedVersion")
+                    Write-Verbose -Message ($localizedData.ModuleFound -f $Name, $installedVersion)
                     $returnVal += $m
                 }
                 else {
-                    Write-Verbose -Message ($localizedData.RepositoryMismatch -f $($Name), $($sourceName))
+                    Write-Verbose -Message ($localizedData.RepositoryMismatch -f $Name, $sourceName)
                 }
             }
         }
