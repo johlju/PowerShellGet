@@ -233,7 +233,12 @@ Configuration MSFT_PSModule_VersionRange_Config
 #region Regression test for issue #451 - uninstalling a module that is in use
 <#
     .SYNOPSIS
-        Installs SqlServer module that should be made in use.
+        Installs SqlServer module that should be made
+        in use.
+
+    .NOTES
+        The issue #451 was reproduced using the module
+        SqlServer v21.1.18068.
 #>
 Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
 {
@@ -243,7 +248,8 @@ Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
     {
         PSModule 'Integration_Test'
         {
-            Name               = $Node.Module2_Name
+            Name               = 'SqlServer'
+            RequiredVersion    = '21.1.18068'
             InstallationPolicy = 'Trusted'
         }
     }
@@ -256,6 +262,10 @@ Configuration MSFT_PSModule_InstallModuleThatShouldBeInUse_Config
         the Microsoft.AnalysisServices.Server class which
         loads the assembly into the session which prevents
         the folder from being deleted.
+
+    .NOTES
+        The issue #451 was reproduced using the module
+        SqlServer v21.1.18068.
 #>
 Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
 {
@@ -266,29 +276,44 @@ Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
         Script 'ImportPoshGitModule'
         {
             SetScript  = {
-                $moduleName = $Using:Node.Module2_Name
-                Write-Verbose -Message ('Importing the module ''{0}'' into the current session.' -f $moduleName)
-                Import-Module -Name $moduleName -Force -Verbose:$false
+                $moduleName = 'SqlServer'
 
-                # Use a assembly from the imported module.
+                <#
+                    Make sure the correct version gets imported
+                    into the session.
+                #>
+                $module = Get-Module -Name $moduleName
+                if ($module)
+                {
+                    if ($module.Version -ne '21.1.18068')
+                    {
+                        Remove-Module -Name $moduleName -Force
+                    }
+                }
+
+                Write-Verbose -Message ('Importing the module ''{0}'' (v21.1.18068) into the current session.' -f $moduleName)
+                Import-Module -Name $moduleName -RequiredVersion '21.1.18068' -Force -Verbose:$false
+
+                Write-Verbose -Message ('Use the class ''Microsoft.AnalysisServices.Server'' from an assembly in the imported module ''{0}'' (v21.1.18068).' -f $moduleName)
+                # This will lock the assembly file 'DataSec.PAL.Interfaces.dll' in the module root folder.
                 $sql = New-Object -TypeName 'Microsoft.AnalysisServices.Server'
             }
 
             TestScript = {
-                $moduleName = $Using:Node.Module2_Name
+                $moduleName = 'SqlServer'
 
-                Write-Verbose -Message ('Evaluating if the module ''{0}'' is imported into the current session.' -f $moduleName)
+                Write-Verbose -Message ('Evaluating if the module ''{0}'' (v21.1.18068) is imported into the current session.' -f $moduleName)
 
                 $getScriptResult = & ([ScriptBlock]::Create($GetScript))
 
                 if ($getScriptResult.Result -eq $moduleName)
                 {
-                    Write-Verbose -Message ('The module ''{0}'' is imported.' -f $moduleName)
+                    Write-Verbose -Message ('The module ''{0}'' (v21.1.18068) is already imported.' -f $moduleName)
                     $result = $true
                 }
                 else
                 {
-                    Write-Verbose -Message ('The module ''{0}'' is not imported.' -f $moduleName)
+                    Write-Verbose -Message ('The module ''{0}'' (v21.1.18068) is not imported.' -f $moduleName)
                     $result = $false
                 }
 
@@ -296,16 +321,25 @@ Configuration MSFT_PSModule_ImportModuleToBeInUse_Config
             }
 
             GetScript  = {
-                [System.String] $moduleName = $null
+                [System.String] $resultModuleName = $null
 
-                $module = Get-Module -Name $Using:Node.Module2_Name
+                $moduleName = 'SqlServer'
+
+                $module = Get-Module -Name $moduleName
                 if ($module)
                 {
-                    $moduleName = $module.Name
+                    <#
+                        Make sure the correct version is loaded
+                        that is required for the regression test.
+                    #>
+                    if ($module.Version -eq '21.1.18068')
+                    {
+                        $resultModuleName = $module.Name
+                    }
                 }
 
                 return @{
-                    Result = $moduleName
+                    Result = $resultModuleName
                 }
             }
         }
@@ -325,7 +359,7 @@ Configuration MSFT_PSModule_UninstallModuleThatIsInUse_Config
         PSModule 'Integration_Test'
         {
             Ensure = 'Absent'
-            Name   = $Node.Module2_Name
+            Name   = 'SqlServer'
         }
     }
 }
