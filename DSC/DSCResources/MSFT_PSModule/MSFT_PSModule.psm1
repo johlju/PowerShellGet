@@ -480,7 +480,7 @@ function Set-TargetResource {
             }
             catch {
                 Write-Verbose -Message ('FullyQualifiedErrorId: {0}' -f $_.FullyQualifiedErrorId)
-                Write-Verbose -Message ('Error Id: {0}' -f $_.FullyQualifiedErrorId)
+                Write-Verbose -Message ('Exception: {0}' -f $_.Exception.GetType().Name)
                 $errorMessage = $script:localizedData.FailToUninstall -f $module.Name
                 New-InvalidOperationException -Message $errorMessage -ErrorRecord $_
             }
