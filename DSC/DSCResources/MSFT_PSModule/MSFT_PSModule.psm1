@@ -475,7 +475,7 @@ function Set-TargetResource {
                     There is no Uninstall-Module cmdlet for Windows PowerShell 4.0,
                     so we will remove the ModuleBase folder as an uninstall operation.
                 #>
-                Microsoft.PowerShell.Management\Remove-Item -Path $path -Force -Recurse
+                Microsoft.PowerShell.Management\Remove-Item -Path $path -Force -Recurse -ErrorAction 'Stop'
 
                 Write-Verbose -Message ($localizedData.UnInstalledSuccess -f $module.Name)
             }
