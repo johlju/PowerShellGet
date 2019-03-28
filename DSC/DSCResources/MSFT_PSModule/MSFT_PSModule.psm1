@@ -480,9 +480,15 @@ function Set-TargetResource {
             }
             catch [System.UnauthorizedAccessException] {
                 # TODO: Add logic to remove the file during boot.
+                # TODO: Add new parameter 'SuppressRestart'
 
-                if (-not $AllowRestart) {
-                    Write-Warning -Message $script:localizedData.ModuleInUse -f $module.Name, $_.Exception.Message
+                if ($SuppressRestart) {
+                    $warningMessage = $script:localizedData.ModuleInUse -f $module.Name, $_.Exception.Message
+                    Write-Warning -Message $warningMessage
+                }
+                else {
+                    # Restarting node.
+                    $global:DSCMachineStatus = 1
                 }
             }
             catch {
@@ -546,7 +552,7 @@ function Get-RightModule {
         $Repository
     )
 
-    Write-Verbose -Message ($localizedData.StartGetModule -f $($Name))
+    Write-Verbose -Message ($localizedData.StartGetModule -f $Name)
 
     $modules = Microsoft.PowerShell.Core\Get-Module -Name $Name -ListAvailable -ErrorAction SilentlyContinue -WarningAction SilentlyContinue
 
