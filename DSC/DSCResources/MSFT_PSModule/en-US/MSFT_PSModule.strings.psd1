@@ -33,5 +33,5 @@ ConvertFrom-StringData -StringData @'
     InstallationPolicyFailed        = Failed in the installation policy. Your current InstallationPolicy is '{0}' and the repository is '{1}'. If you trust the repository, set the policy to "Trusted".
     GetTargetResourceMessage        = Getting the current state of the module '{0}'.
     TestTargetResourceMessage       = Determining if the module '{0}' is in the desired state.
-    ModuleInUse                     = Unable to remove the module '{0}' because it is currently in use. The files are marked for deletion, and a restart is required to remove the module. Error: {1}
+    ModuleInUse                     = Unable to remove the module '{0}' because it is currently in use. The files are marked for deletion, and a restart is required to remove the module. For information, this was the error that led to the files being marked for deletion: {1}
 '@
