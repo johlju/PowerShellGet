@@ -481,6 +481,8 @@ function Set-TargetResource {
             catch [System.UnauthorizedAccessException] {
                 # TODO: Add logic to remove the file during boot.
                 # TODO: Add new parameter 'SuppressRestart'
+                # TODO: Should check if the module is already pending removal (marked for deletion), and not mark them again.
+                $SuppressRestart = $true
 
                 if ($SuppressRestart) {
                     $warningMessage = $script:localizedData.ModuleInUse -f $module.Name, $_.Exception.Message
