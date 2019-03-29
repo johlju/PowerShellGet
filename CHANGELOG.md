@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+- Changes to DSC resource PSModule
+  - Update integration test to resolve a bug when a test is evaluating
+    the result returned from Test-DscConfiguration.
+- Changes to DSC resource PSModule
+  - Update integration test to resolve a bug when a test is evaluating
+    the result returned from Test-DscConfiguration.
+
 ## 2.1.2
 
 New Feature

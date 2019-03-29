@@ -87,7 +87,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -133,7 +133,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -205,7 +205,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -251,7 +251,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -297,7 +297,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -344,7 +344,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -395,7 +395,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -441,7 +441,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -492,7 +492,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -525,7 +525,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -558,7 +558,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 
@@ -591,7 +591,7 @@ Describe "$($script:dcsResourceName)_Integration" {
         }
 
         It 'Should return $true when Test-DscConfiguration is run' {
-            Test-DscConfiguration -Verbose | Should -Be $true
+            Test-DscConfiguration -Verbose | Should -Be 'True'
         }
     }
 }
