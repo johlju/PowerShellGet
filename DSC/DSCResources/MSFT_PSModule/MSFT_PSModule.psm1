@@ -476,12 +476,17 @@ function Set-TargetResource {
                 #>
                 Microsoft.PowerShell.Management\Remove-Item -Path $path -Force -Recurse -ErrorAction 'Stop'
 
+                #TODO: SHOULD ADD THE ERROR TO AN ERROR VARIABLE INSTEAD, AND USE SILENTLY CONTINUE. So it removes all the files it can.
+
                 Write-Verbose -Message ($localizedData.UninstalledSuccess -f $module.Name)
             }
             catch [System.UnauthorizedAccessException] {
                 # TODO: Add logic to remove the file during boot.
                 # TODO: Add new parameter 'SuppressRestart'
                 # TODO: Should check if the module is already pending removal (marked for deletion), and not mark them again.
+
+                # TODO: Request-FileDeletion, Set-FileDeletionMark, Mark-FileDelete
+
                 $SuppressRestart = $true
 
                 if ($SuppressRestart) {
