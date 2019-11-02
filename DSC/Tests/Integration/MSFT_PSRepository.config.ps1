@@ -131,7 +131,7 @@ configuration MSFT_PSRepository_AddRepository_TestRepo_Config
 {
     Import-DscResource -ModuleName 'PowerShellGet'
 
-    Node $nodeName
+    Node $AllNodes.NodeName
     {
         PSRepository 'Integration_Test'
         {
