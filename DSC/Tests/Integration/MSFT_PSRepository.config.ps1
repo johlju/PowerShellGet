@@ -126,3 +126,18 @@ Configuration MSFT_PSRepository_RemoveRepository_Config
         }
     }
 }
+
+configuration MSFT_PSRepository_AddRepository_TestRepo_Config
+{
+    Import-DscResource -ModuleName 'PowerShellGet'
+
+    Node $nodeName
+    {
+        PSRepository 'Integration_Test'
+        {
+            Name                  = 'TestRepo'
+            SourceLocation        = $Node.TestSourceLocation
+            InstallationPolicy    = 'Trusted'
+        }
+    }
+}
